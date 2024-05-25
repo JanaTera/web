@@ -1,0 +1,118 @@
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+    <p>Email Address</p>
+    <input
+      type="email"
+      class="form-control"
+      formControlName="Email"
+      [ngClass]="{
+        'is-invalid':
+          signUpFormGetter.Email.touched && signUpFormGetter.Email.invalid
+      }"
+    />
+    <div
+      class="text-danger"
+      *ngIf="signUpFormGetter.Email.touched && signUpFormGetter.Email.invalid"
+    >
+      <div *ngIf="signUpFormGetter.Email.errors?.email">Invalid Email!</div>
+      <div *ngIf="signUpFormGetter.Email.errors?.required">Email is required</div>
+    </div>
+  
+    <div class="pass">
+      <div class="password">
+        <p>Password</p>
+      </div>
+      <div class="show">
+        <input
+          type="{{ showPassword ? 'text' : 'password' }}"
+          class="form-control"
+          formControlName="password"
+          [ngClass]="{
+            'is-invalid':
+              signUpFormGetter.password.touched &&
+              signUpFormGetter.password.invalid
+          }"
+        />
+        <p (click)="showPassword = !showPassword" class="showPassword">
+          <fa-icon [icon]="faEye"></fa-icon>
+        </p>
+      </div>
+      <div
+        class="text-danger"
+        *ngIf="
+          signUpFormGetter.password.touched && signUpFormGetter.password.invalid
+        "
+      >
+        
+        <div *ngIf="signUpFormGetter.password.hasError('minlength')">
+          Password must be at least 8 characters long.
+        </div>
+        <div *ngIf="signUpFormGetter.password.hasError('required')">
+          Password is required.
+        </div>
+  
+        <div
+          class="text-danger"
+          *ngIf="signUpFormGetter.password.hasError('containsSpace')"
+        >
+          Passwords can't contain spaces.
+        </div>
+        <div
+          class="text-danger"
+          *ngIf="signUpFormGetter.password.hasError('upperCaseError')"
+        >
+          Passwords must contain at least one uppercase.
+        </div>
+        <div
+          class="text-danger"
+          *ngIf="signUpFormGetter.password.hasError('containsNumberError')"
+        >
+          Passwords must contain at least one number.
+        </div>
+        <div
+          class="text-danger"
+          *ngIf="signUpFormGetter.password.hasError('containsUnusualSign')"
+        >
+          Passwords can't contain signs.
+        </div>
+      </div>
+    </div>
+    <div class="pass">
+      <div class="password">
+        <p>Confirm Password</p>
+      </div>
+      <div class="show">
+        <input
+          type="{{ showPassword ? 'text' : 'password' }}"
+          class="form-control"
+          formControlName="Cpassword"
+          [ngClass]="{
+            'is-invalid':
+              signUpFormGetter.Cpassword.touched &&
+              signUpFormGetter.Cpassword.invalid
+          }"
+        />
+        <p (click)="showPassword = !showPassword" class="showPassword">
+          <fa-icon [icon]="faEye"></fa-icon>
+        </p>
+      </div>
+      <div
+        *ngIf="
+          signUpFormGetter.Cpassword.touched && signUpFormGetter.Cpassword.invalid
+        "
+      >
+        <div
+          class="text-danger"
+          *ngIf="signUpFormGetter.Cpassword.hasError('passwordMatch')"
+        >
+          Passwords doesn't match
+        </div>
+        <div class="text-danger" *ngIf="signUpFormGetter.Cpassword.hasError('required')">
+          Confirming your password is required
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <button type="submit" [disabled]="signUpForm.invalid">Sign Up</button>
+    </div>
+  </form>
